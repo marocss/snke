@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body, html {
@@ -12,6 +13,10 @@ body, html {
   overflow: hidden;
 }
 
+body {
+  position: fixed;
+}
+
 #root {
   height: 100%;
 }
@@ -19,10 +24,11 @@ body, html {
 .App {
   display: flex;
   height: 100%;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: center; 
 }
 
-.Game {
+.game {
 }
 
