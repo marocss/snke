@@ -2,13 +2,15 @@
 // let scl = 20;
 // let food;
 
-export default function Snake(p, scl) {
+export default function Snake(p, scl, width, height) {
   this.x = 0;
   this.y = 0;
   this.xspeed = 1;
   this.yspeed = 0;
   this.total = 0;
   this.tail = [];
+  this.w = width
+  this.h = height
 
   this.eat = function(pos) {
     let d = p.dist(this.x, this.y, pos.x, pos.y);
@@ -48,8 +50,9 @@ export default function Snake(p, scl) {
     this.x = this.x + this.xspeed * scl;
     this.y = this.y + this.yspeed * scl;
 
-    this.x = p.constrain(this.x, 0, 600 - scl);
-    this.y = p.constrain(this.y, 0, 600 - scl);
+
+    this.x = p.constrain(this.x, 0, this.w - scl);
+    this.y = p.constrain(this.y, 0, this.h - scl);
   };
 
   this.show = function() {

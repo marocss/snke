@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import './App.css';
 import p5 from 'p5';
 import Snake from './Snake'
@@ -8,19 +8,24 @@ let scl = 20;
 let food: { x: any; y: any; mult: (arg0: number) => void; };
 
 function App() {
+  const [width, ] = useState((window.innerWidth) - (window.innerWidth % 20))
+  const [height, ] = useState(window.innerHeight - (window.innerHeight % 20))
+
   let p5Canvas = useRef(null)
 
   useEffect(() => {
+    console.log(width, height)
+
     new p5( p => {      
       p.setup = () => {
-        p.createCanvas(600, 600);
-        s = new Snake(p, scl);
+        p.createCanvas(width, height).parent(p5Canvas.current)
+        s = new Snake(p, scl, width, height);
         p.frameRate(10);
         pickLocation();
       };
       
       p.draw = () => {
-        p.background(51);
+        p.background(65);
         if (s.eat(food)) {
           pickLocation();
         }
@@ -44,17 +49,22 @@ function App() {
       }
 
       function pickLocation() {
-        let cols = p.floor(600 / scl);
-        let rows = p.floor(600 / scl);
+        let cols = p.floor(width / scl);
+        let rows = p.floor(height / scl);
+        // console.log(p.random(cols), rows)
         food = p.createVector(p.floor(p.random(cols)), p.floor(p.random(rows)));
+        // console.log(food)
         food.mult(scl);
+        // console.log(food.mult(scl))
+        
       }
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
     <div className="App">
-      <div ref={p5Canvas} />
+      <div className="Game" ref={p5Canvas}></div>
     </div>
   );
 }
