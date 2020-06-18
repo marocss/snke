@@ -1,12 +1,33 @@
+import p5 from 'p5'
+
+
+interface ColorObj {
+  r: number
+  g: number
+  b: number
+}
+
 class Food {
-  constructor(sketch, gameBoardWidth, gameBoardHeight, squareSize) {
+  sketch: p5
+  squareSize: number
+  x: number
+  y: number
+  w: number
+  h: number
+  color: ColorObj
+
+  constructor(sketch: p5, gameBoardWidth: number, gameBoardHeight: number, squareSize: number) {
     this.sketch = sketch
     this.squareSize = squareSize
-    this.x = null
-    this.y = null
+    this.x = 0
+    this.y = 0
     this.w = gameBoardWidth
     this.h = gameBoardHeight
-    this.color = null
+    this.color = {
+      r: 0,
+      g: 255,
+      b: 100
+    }
   }
 
   create() {
@@ -18,13 +39,14 @@ class Food {
       this.sketch.floor(this.sketch.random(rows))
     )
 
-    food.mult(this.squareSize) //
+    food.mult(this.squareSize)
+    
     this.x = food.x
     this.y = food.y
   }
 
   show() {
-    this.sketch.fill(0, 255, 100)
+    this.sketch.fill(this.color.r, this.color.g, this.color.b)
     this.sketch.rect(this.x, this.y, this.squareSize, this.squareSize)
   }
 }

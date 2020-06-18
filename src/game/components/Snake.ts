@@ -1,5 +1,19 @@
+import p5 from "p5";
+import Food from "./Food";
+
 class Snake {
-  constructor(sketch, gameBoardWidth, gameBoardHeight, squareSize) {
+  sketch: p5
+  w: number
+  h: number
+  squareSize: number
+  x: number
+  y: number
+  xspeed: number
+  yspeed: number
+  total: number
+  tail: p5.Vector[]
+
+  constructor(sketch: p5, gameBoardWidth: number, gameBoardHeight: number, squareSize: number) {
     this.sketch = sketch
     this.w = gameBoardWidth;
     this.h = gameBoardHeight;
@@ -13,7 +27,7 @@ class Snake {
     this.tail = [];
   }
 
-  eat(food) {
+  eat(food: Food) {
     let distance = this.sketch.dist(this.x, this.y, food.x, food.y)
     
     if (distance < 1) {
@@ -24,7 +38,7 @@ class Snake {
     }
   }
 
-  move(x, y) {
+  move(x: number, y: number) {
     const isMoveBackwards = this.xspeed === (x*-1) || this.yspeed === (y*-1)
     const isFirstMove = this.total === 0
     

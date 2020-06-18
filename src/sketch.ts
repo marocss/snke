@@ -1,15 +1,19 @@
-import Snake from './gameComponents/Snake'
-import Food from './gameComponents/Food'
+import p5 from 'p5'
+
+import Snake from './game/components/Snake'
+import Food from './game/components/Food'
+
 import onTouch from './utils/onTouch'
 
 
-const sktch = sketch => {      
-  let snake
+const sktch = (sketch: p5) => {      
+  let snake: Snake
   const squareSize = 20
-  let food
+  let food: Food
+  const borderSize = 10
 
-  const width = (window.innerWidth - 10) - ((window.innerWidth - 10) % squareSize)
-  const height = (window.innerHeight - 10) - ((window.innerHeight - 10) % squareSize)
+  const width = (window.innerWidth - borderSize) - ((window.innerWidth - borderSize) % squareSize)
+  const height = (window.innerHeight - borderSize) - ((window.innerHeight - borderSize) % squareSize)
 
 
   sketch.setup = () => {
@@ -18,7 +22,7 @@ const sktch = sketch => {
 
     snake = new Snake(sketch, width, height, squareSize)
     food = new Food(sketch, width, height, squareSize)
-    
+
     food.create()
   }
   
@@ -36,8 +40,8 @@ const sktch = sketch => {
     snake.death()
   }
 
-  sketch.keyPressed = (event) => {
-    switch (event.key) {
+  sketch.keyPressed = () => {    
+    switch (sketch.key) {
       case 'ArrowUp':
         snake.move(0, -1)
         break
@@ -59,7 +63,7 @@ const sktch = sketch => {
     }
   }
 
-  const moveOnSwipe = (direction) => {
+  const moveOnSwipe = (direction: string) => {
     switch (direction) {
       case 'up':
         snake.move(0, -1)
@@ -84,7 +88,7 @@ const sktch = sketch => {
 
   window.addEventListener('load', function() {
       var gameWindow = document.getElementById('game')
-      onTouch(gameWindow, function(dir){
+      onTouch(gameWindow, function(dir: string){
         moveOnSwipe(dir)
       })
   })
