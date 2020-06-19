@@ -10,8 +10,9 @@ class Snake {
   y: number
   xspeed: number
   yspeed: number
-  total: number
   tail: p5.Vector[]
+  died: boolean
+  ate: boolean
 
   constructor(sketch: p5, gameBoardWidth: number, gameBoardHeight: number, squareSize: number) {
     this.sketch = sketch
@@ -23,24 +24,40 @@ class Snake {
     this.y = 0;
     this.xspeed = 1;
     this.yspeed = 0;
-    this.total = 0;
     this.tail = [];
+    this.died = false;
+    this.ate = false;
   }
 
-  eat(food: Food) {
+  private eat(food: Food): void {
     let distance = this.sketch.dist(this.x, this.y, food.x, food.y)
     
-    if (distance < 1) {
-      this.total++
+    this.ate = (distance < 1) ? true : false
+  }
+
+  isSnakeDead() {
+    if(this.died) {
       return true
     } else {
       return false
     }
   }
 
-  move(x: number, y: number) {
+  private death(): void {
+    for (let i = 0; i < this.tail.length; i++) {
+      let tailNode = this.tail[i];
+      let distance = this.sketch.dist(this.x, this.y, tailNode.x, tailNode.y);
+      
+      if (distance < 1) {
+        this.tail = []
+        this.died = true
+      }
+    }
+  }
+
+  public move(x: number, y: number): void {
     const isMoveBackwards = this.xspeed === (x*-1) || this.yspeed === (y*-1)
-    const isFirstMove = this.total === 0
+    const isFirstMove = this.tail.length === 0 
     
     if (isMoveBackwards && !isFirstMove) {
       return
@@ -50,27 +67,13 @@ class Snake {
     this.yspeed = y;
   }
 
-  death() {
-    for (let i = 0; i < this.tail.length; i++) {
-      let tailNode = this.tail[i];
-      let distance = this.sketch.dist(this.x, this.y, tailNode.x, tailNode.y);
-      
-      if (distance < 1) {
-        alert(`Você morreu!\nPontos: ${this.total}`)
-
-        this.total = 0;
-        this.tail = [];
-      }
-    }
-  }
-
-  update() {
+  public update(total: number, food: Food): void {
     for (let i = 0; i < this.tail.length - 1; i++) {
       this.tail[i] = this.tail[i + 1];
     }
 
-    if (this.total >= 1) {
-      this.tail[this.total - 1] = this.sketch.createVector(this.x, this.y);
+    if (total >= 1) {
+      this.tail[total - 1] = this.sketch.createVector(this.x, this.y);
     }
 
     this.x = this.x + this.xspeed * this.squareSize;
@@ -78,9 +81,12 @@ class Snake {
 
     this.x = this.sketch.constrain(this.x, 0, this.w - this.squareSize);
     this.y = this.sketch.constrain(this.y, 0, this.h - this.squareSize);
+
+    this.death()
+    this.eat(food)
   }
 
-  show() {
+  public show(): void {
     this.sketch.fill(255);
     for (let i = 0; i < this.tail.length; i++) {
       this.sketch.rect(this.tail[i].x, this.tail[i].y, this.squareSize, this.squareSize);

@@ -30,7 +30,7 @@ class Food {
     }
   }
 
-  create() {
+  public create(): void {
     let cols = this.sketch.floor(this.w / this.squareSize)
     let rows = this.sketch.floor(this.h / this.squareSize)
 
@@ -45,7 +45,7 @@ class Food {
     this.y = food.y
   }
 
-  show() {
+  public show(): void {
     this.sketch.fill(this.color.r, this.color.g, this.color.b)
     this.sketch.rect(this.x, this.y, this.squareSize, this.squareSize)
   }

@@ -1,18 +1,13 @@
-import React, {useLayoutEffect } from 'react';
-import p5 from 'p5';
-import sketch from './sketch'
+import React from 'react';
+
+import Game from './components/Game';
 
 import './App.css';
 
-function App() {
- 
-  useLayoutEffect(() => {
-    new p5(sketch)
-  }, [])
-
+const App: React.FC = () => { 
   return (
     <div className="App">
-      <div id="game"></div>
+      <Game />
     </div>
   )
 }

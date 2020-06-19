@@ -22,10 +22,10 @@ export default function onTouch(element: HTMLElement | null, callback: Function)
         distY = touchobj.pageY - startY 
       
         if (Math.abs(distX) > Math.abs(distY)){ 
-            dir = (distX < 0)? 'left' : 'right'
+            dir = (distX < 0)? 'a' : 'd'
             handletouch(dir) 
         } else { 
-            dir = (distY < 0)? 'up' : 'down'
+            dir = (distY < 0)? 'w' : 's'
             handletouch(dir) 
         }
         
