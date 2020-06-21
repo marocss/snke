@@ -1,6 +1,6 @@
 import React from 'react'
-import Snake from './components/Snake'
-import Food from './components/Food'
+import Snake from './Snake'
+import Food from './Food'
 import onTouch from '../utils/onTouch'
 import p5 from 'p5'
 
@@ -23,6 +23,7 @@ export default class Game {
   startTimer: Function
   stopwatch: Stopwatch
   setIsDead: React.Dispatch<React.SetStateAction<boolean>>
+  gameRef: React.RefObject<HTMLDivElement>
 
   constructor(sketch: p5,
     width: number, 
@@ -33,7 +34,9 @@ export default class Game {
     stopwatch: Stopwatch, 
     startTimer: Function, 
     stopAndResetTimer: Function, 
-    isDead: React.Dispatch<React.SetStateAction<boolean>>
+    isDead: React.Dispatch<React.SetStateAction<boolean>>,
+    gameRef: React.RefObject<HTMLDivElement>
+
     ) {
       this.sketch = sketch
       this.width = width
@@ -47,10 +50,11 @@ export default class Game {
       this.startTimer = startTimer
       this.stopwatch = stopwatch
       this.setIsDead = isDead
+      this.gameRef = gameRef
   }
 
   public start(): void {
-    this.sketch.createCanvas(this.width, this.height).parent('game')
+    this.sketch.createCanvas(this.width, this.height)
     this.sketch.frameRate(10)
 
     this.listenForInputs()
@@ -59,12 +63,13 @@ export default class Game {
     this.food.create()
   }
 
-  public update(): void | boolean {
+  public update(): void {
     this.snake.update(this.total, this.food)
 
     if (this.snake.ate) {
       this.total++
       this.setTotalFood((prevState: number)=> (prevState + 1))
+      this.food.updateColor()
       this.food.create()
       this.snake.ate = false
     }
@@ -91,7 +96,7 @@ export default class Game {
     }
 
     // swipes
-    onTouch(document.getElementById('game'), (direction: string) => {
+    onTouch(this.gameRef.current, (direction: string) => {
       this.handleInput(direction)
     })
   }

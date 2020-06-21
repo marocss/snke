@@ -1,6 +1,53 @@
 import p5 from 'p5'
 
+const foodColors = [
+  {
+    r: 0, // green
+    g: 255,
+    b: 100
+  },
+  {
+    r: 245, // yellow
+    g: 255,
+    b: 0
+  },
+  {
+    r: 255, // orange
+    g: 157,
+    b: 0
+  },
+  {
+    r: 255, // pink
+    g: 0,
+    b: 88
+  },
+  {
+    r: 0, // blue
+    g: 88,
+    b: 255
+  },
+  {
+    r: 0, // light blue
+    g: 226,
+    b: 255
+  },
+  {
+    r: 0, // light green
+    g: 255,
+    b: 186
+  },
+  {
+    r: 255, // purple
+    g: 30,
+    b: 255
+  },
+  {
+    r: 88, // bright green
+    g: 255,
+    b: 0
+  },
 
+]
 interface ColorObj {
   r: number
   g: number
@@ -43,6 +90,15 @@ class Food {
     
     this.x = food.x
     this.y = food.y
+  }
+
+  public updateColor(): void {
+    let randIndex = Math.floor(this.sketch.random(foodColors.length))
+    let colors = foodColors[randIndex]
+
+    this.color.r = colors.r
+    this.color.g = colors.g
+    this.color.b = colors.b
   }
 
   public show(): void {

@@ -1,8 +1,8 @@
 # Snke
 
-> [Snke](https://snke.now.sh) is a simple snake game using **ReactJS** and **p5**.
+> [Snke](https://snke.now.sh) is a simple snake game using **ReactJS**, **p5** and **Firebase**.
 
-> The game runs on a p5 instance inside a React app.
+> The game runs a p5 instance inside a React app and uses Firebase anonymous login to save users game sessions in Firestore so we can get the best scores to create a ranking.
 
 ---
 
@@ -15,18 +15,35 @@
 ├── public
 │   └── index.html
 ├── src
-│   ├── App.css
 │   ├── App.tsx
 │   ├── components
-│   │   └── Game
-│   │   └── index.tsx
+│   │   ├── Game
+│   │   │   └── index.tsx
+│   │   └── Navbar
+│   │       ├── index.js
+│   │       └── styles.js
+│   ├── context
+│   │   └── AuthContext.tsx
 │   ├── game
+│   │   ├── Food.ts
 │   │   ├── Game.ts
-│   │   └── components
-│   │       ├── Food.ts
-│   │       └── Snake.ts
+│   │   └── Snake.ts
 │   ├── index.tsx
+│   ├── pages
+│   │   ├── Home
+│   │   │   ├── index.js
+│   │   │   └── styles.js
+│   │   ├── Login
+│   │   │   ├── index.js
+│   │   │   └── styles.js
+│   │   └── Ranking
+│   │       ├── index.js
+│   │       └── styles.js
 │   ├── react-app-env.d.ts
+│   ├── routes
+│   │   └── index.tsx
+│   ├── styles
+│   │   └── global.ts
 │   └── utils
 │       └── onTouch.ts
 ├── tsconfig.json
@@ -54,14 +71,15 @@
 
 ## To-do
 
-- [ ] add react-router-dom
-- [ ] create pages  
-  - [ ] login  
-  - [ ] ranking  
-  - [ ] game
-- [ ] add anonymous login with firebase
-- [ ] store player data
-- [ ] get ranking from database
+- [x] add react-router-dom
+- [x] create pages  
+  - [x] login  
+  - [x] ranking  
+  - [x] game
+- [x] add anonymous login with firebase
+- [x] store player data
+- [x] get ranking from database
+- [x] change fruit color when eaten
 - [ ] add examples to README
 
 ---

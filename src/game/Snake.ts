@@ -63,8 +63,8 @@ class Snake {
       return
     }
 
-    this.xspeed = x;
-    this.yspeed = y;
+      this.xspeed = x;
+      this.yspeed = y;
   }
 
   public update(total: number, food: Food): void {
