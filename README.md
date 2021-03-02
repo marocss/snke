@@ -52,7 +52,7 @@
 
 ---
 
-## Tecnologies & Tools
+## Technologies & Tools
 
 - [typescript](https://www.typescriptlang.org/)
 - [reactjs](https://reactjs.org/)
